@@ -1,0 +1,35 @@
+Metadata-Version: 2.0
+Name: winreglib
+Version: 0.1.0
+Summary: High level, class based Windows registry manipulation
+Home-page: https://github.com/adamkerz/winreglib
+Author: Adam Kerz
+Author-email: github@kerz.id.au
+License: BSD 3-Clause
+Keywords: winreg
+Platform: UNKNOWN
+Classifier: Development Status :: 4 - Beta
+Classifier: Intended Audience :: Developers
+Classifier: Natural Language :: English
+Classifier: Operating System :: Microsoft :: Windows
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.4
+Classifier: Programming Language :: Python :: 3.5
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+
+=========
+winreglib
+=========
+
+A Pathlib style object oriented interface to the Windows Registry
+
+Examples::
+
+    from winreglib import RegPath
+    p=RegPath(r'HKLM\Software')
+    for k in p.subkeys():
+        print(k.name)
+        k.value('test').set('apples')
+
+

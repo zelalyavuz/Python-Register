@@ -1,0 +1,11 @@
+README.rst
+setup.cfg
+setup.py
+suppressor.py
+suppressor.egg-info/PKG-INFO
+suppressor.egg-info/SOURCES.txt
+suppressor.egg-info/dependency_links.txt
+suppressor.egg-info/entry_points.txt
+suppressor.egg-info/pbr.json
+suppressor.egg-info/requires.txt
+suppressor.egg-info/top_level.txt

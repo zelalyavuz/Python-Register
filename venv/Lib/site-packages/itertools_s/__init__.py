@@ -1,0 +1,480 @@
+def kmeans():
+	print('kmeans\n')
+	print('''from statistics import mean
+import math
+
+def k_means(k_list,elements,no_of_elements,value_of_k):
+	i=j=0
+	diff=[]
+	copy_list=[]
+	count=0
+	while True:
+		copy_list=k_list[0].copy()
+		count+=1
+		for i in range(no_of_elements):
+			diff=[]
+			for j in range(value_of_k):
+				diff.append(abs(k_list[0][j]-elements[i]))
+			indx=diff.index(min(diff))
+			k_list[indx+1].append(elements[i])
+		print(count,"iteration:")
+		for i in range(1,(value_of_k+1),1):
+			print("k",(i),":",k_list[i],"=",k_list[0][i-1])
+		for i in range(value_of_k):
+			k_list[0][i]=mean(k_list[i+1])
+		if copy_list == k_list[0] :
+			print("Since the clusters consists same elements, the final clusters are:")
+			for i in range(1,(value_of_k+1),1):
+				print("k",(i),":",k_list[i],"=",k_list[0][i-1])
+			break
+		for i in range(value_of_k):
+			k_list[i+1]=[]
+#-------------------------------------------------------------------#			
+
+no_of_elements=int(input("Enter total number of elements:"))
+value_of_k=int(input("Enter value of K:"))
+elements=[]
+print("Enter the elements:")
+for i in range(no_of_elements):
+	elements.append(int(input()))
+k_list = [[] * no_of_elements for p in range(no_of_elements)]
+for j in range(value_of_k):
+	k_list[0].append(elements[j])
+print("elements:",elements)
+print("random k values:",k_list[0])	
+k_means(k_list,elements,no_of_elements,value_of_k)	
+		''')
+def naive():
+	print('naivebyase\n')
+	print('''
+		import csv
+
+
+def probability(parameter_list,parameter,total_data,classs,total_yes):
+	yes=0
+	no=0
+	p1=p2=0
+	for i in range(total_data):
+		if parameter_list[i] == parameter and classs[i] == 'yes':
+			yes+=1
+		elif parameter_list[i] == parameter and classs[i] == 'no':
+			no+=1
+	p1=yes/total_yes
+	p2=no/(total_data-total_yes)		
+	return p1,p2
+
+
+
+
+
+
+src = []
+with open('naive.csv','r') as csv_file:
+	csv_reader = csv.reader(csv_file)
+	for row in csv_reader:
+		src.append(row)
+csv_file.close()
+print(len(src))		
+
+n=len(src)
+z=0
+age=[]
+classs=[]
+income=[]
+student=[]
+credit_rating=[]
+
+for i in range(1,n):
+	for j in range(0,5):
+		if j==0:
+			age.append(src[i][j])
+		elif j==1:
+			income.append(src[i][j])
+		elif j==2:
+			student.append(src[i][j])
+		elif j==3:
+			credit_rating.append(src[i][j])
+		else:
+			classs.append(src[i][j])
+
+total_data=len(classs)					
+total_yes=0
+total_no=0
+age1=0
+
+for i in range(total_data):
+	if classs[i] == 'yes':
+		total_yes+=1
+
+total_no=total_data-total_yes
+probability_yesClass=total_yes/total_data
+probability_noClass=total_no/total_data
+print("Probability of YES class=",round(probability_yesClass,2))
+print("Probability of NO class=",round(probability_noClass,2))
+print()
+user_age=input("Enter AGE(youth/middle/senior):")
+user_income=input("Enter INCOME(low/medium/high):")
+user_student=input("Is the person STUDENT?(yes/no):")
+user_credit_rating=input("Enter CREDIT_RATING(fair/excel):")
+probability_age_yes,probability_age_no=probability(age,user_age,total_data,classs,total_yes)
+probability_income_yes,probability_income_no=probability(income,user_income,total_data,classs,total_yes)
+probability_student_yes,probability_student_no=probability(student,user_student,total_data,classs,total_yes)
+probability_credit_yes,probability_credit_no=probability(credit_rating,user_credit_rating,total_data,classs,total_yes)
+
+print("AGE probability for YES=",round(probability_age_yes,4))
+print("AGE probability for NO=",round(probability_age_no,4))
+print("-")
+print("INCOME probability for YES=",round(probability_income_yes,4))
+print("INCOME probability for NO=",round(probability_income_no,4))
+print("-")
+print("STUDENT probability for YES=",round(probability_student_yes,4))
+print("STUDENT probability for NO=",round(probability_student_no,4))
+print("-")
+print("CREDIT_RATING probability for YES=",round(probability_credit_yes,4))
+print("CREDIT_RATING probability for NO=",round(probability_credit_no,4))
+print("-")
+probability_yesClass=probability_yesClass*probability_age_yes*probability_income_yes*probability_student_yes*probability_credit_yes
+probability_noClass=probability_noClass*probability_age_no*probability_income_no*probability_student_no*probability_credit_no
+print("-")
+print("Total probability of YES class=",round(probability_yesClass,5))
+print("Total probability of NO class=",round(probability_noClass,5))
+print("RESULT:-")
+
+if probability_yesClass>probability_noClass:
+	print("The tuple belongs to YES class, therefore the person will buy the computer.")
+else:
+	print("The tuple belongs to NO class, therefore the person will not buy the computer.")
+
+	
+	--------------------------------------------------------------------------------------naive.csv-----------------
+age,income,credit_score,student ,buy_comp
+>=30,high,high,yes,no
+>=31,high,high,yes,no
+>=32,high,high,yes,yes
+>=33,high,high,yes,yes
+>=34,low,low,no,yes
+>=35,low,low,no,yes
+>=36,low,high,no,yes
+>=37,low,high,no,no
+>=38,moderate,high,yes,no
+>=39,moderate,high,yes,no
+>=40,moderate,high,no,no
+>=41,low,high,no,yes
+>=42,low,high,no,yes
+>=43,moderate,high,yes,yes
+>=44,moderate,high,yes,yes
+>=45,moderate,high,no,yes
+>=46,low,high,no,yes
+>=47,low,high,no,yes
+>=48,moderate,high,yes,yes
+>=49,moderate,high,yes,yes
+>=30,high,high,yes,yes
+>=30,high,low,no,yes
+
+
+		''')
+def apriori():
+	print('Apriori')
+	print('''
+#import itertools
+
+def filter(currentItemList,currentCountList):
+	#global ms,countList,noItems
+	tempItemList = []
+	tempCountList = []
+	for i in range(len(currentItemList)):
+		if currentCountList[i] > ms:
+			tempCountList.append(currentCountList[i])
+			tempItemList.append(currentItemList[i])
+	return tempItemList,tempCountList		
+
+def printCountList(currentItemList,currentCountList):
+	#global currentItemList,currentCountList
+	print("ITEM\t\tCOUNT")
+	for i in range(len(currentItemList)):
+		try:
+			
+			for j in range(len(currentItemList[i])):
+				print('I'+str(currentItemList[i][j]),end=' ')
+			print('\t\t'+str(currentCountList[i]))
+		except TypeError:
+			print('I'+str(currentItemList[i]),end=' ')
+			print('\t\t'+str(currentCountList[i]))
+		
+
+
+def crossproduct(currentItemList):
+	#global itemList,noItems
+	tempItemList = []
+	tempCountList = []
+	#l = list(itertools.product(itemList,itemList))
+	#newItemList = []
+	for i in range(len(currentItemList)):
+		for j in range(i+1,len(currentItemList)):
+			tempItemList.append([currentItemList[i],currentItemList[j]])
+			tempCountList.append(0)
+	return tempItemList,tempCountList
+
+def count():
+	global noItems,noTrans,table,countList
+	for i in range(noTrans):
+		for j in range(noItems):
+			if table[i][j] == 1:
+				countList[j] += 1
+
+
+def rule(currentItemList,currentCountList):
+	global table
+	count = 0
+	c = 0
+	for item in currentItemList:
+		if len(item) == 2:	
+			for trans in table:
+				if trans[item[0]] == 1:
+					count += 1
+			confidence = (currentCountList[c]/count * 100)
+			print('I'+str(item[0])+'->I'+str(item[1])+' confidence:'+str(currentCountList[c])+'/'+str(count)+'='+str(confidence))
+			count = 0
+			for trans in table:
+				if trans[item[1]] == 1:
+					count += 1
+			confidence = (currentCountList[c]/count * 100)
+			print('I'+str(item[1])+'->I'+str(item[0])+' confidence:'+str(currentCountList[c])+'/'+str(count)+'='+str(confidence))
+		
+		if len(item) == 3:
+
+			for trans in table:
+				if trans[item[0]] == 1:
+					count += 1
+			confidence = (currentCountList[c]/count * 100)
+			print('I'+str(item[0])+'->I'+str(item[1])+'I'+str(item[2])+' confidence:'+str(currentCountList[c])+'/'+str(count)+'='+str(confidence))
+			count = 0
+			for trans in table:
+				if trans[item[1]] == 1:
+					count += 1
+			confidence = (currentCountList[c]/count * 100)
+			print('I'+str(item[1])+'->I'+str(item[0])+'I'+str(item[2])+' confidence:'+str(currentCountList[c])+'/'+str(count)+'='+str(confidence))
+			count = 0
+			for trans in table:
+				if trans[item[2]] == 1:
+					count += 1
+			confidence = (currentCountList[c]/count * 100)
+			print('I'+str(item[2])+'->I'+str(item[0])+'I'+str(item[1])+' confidence:'+str(currentCountList[c])+'/'+str(count)+'='+str(confidence))
+
+			count = counter([item[0],item[1]])
+			confidence = (currentCountList[c]/count * 100)
+			print('I'+str(item[0])+'I'+str(item[1])+'->I'+str(item[2])+' confidence:'+str(currentCountList[c])+'/'+str(count)+'='+str(confidence))
+			count = counter([item[0],item[2]])
+			confidence = (currentCountList[c]/count * 100)
+			print('I'+str(item[0])+'I'+str(item[2])+'->I'+str(item[1])+' confidence:'+str(currentCountList[c])+'/'+str(count)+'='+str(confidence))
+			count = counter([item[1],item[2]])
+			confidence = (currentCountList[c]/count * 100)
+			print('I'+str(item[1])+'I'+str(item[2])+'->I'+str(item[0])+' confidence:'+str(currentCountList[c])+'/'+str(count)+'='+str(confidence))
+
+		c += 1
+
+
+def counter(l):
+	global table
+	count = 0
+	for item in l:
+		index1 = 0
+		index2 = 0
+		index3 = 0
+
+		if len(item) == 2:
+			index1 = item[0]
+			index2 = item[1]
+			for trans in table:
+				if trans[index1] == 1 and trans[index2] == 1:
+					count += 1
+
+		if len(item) == 3:
+			index1 = item[0]
+			index2 = item[1]
+			index3 = item[2]
+			for trans in table:
+				if trans[index1] == 1 and trans[index2] == 1 and trans[index3] == 1:
+					count += 1	
+	return count	
+
+def newCount(currentItemList,currentCountList):
+	global table
+	index1 = 0
+	index2 = 0
+	index3 = 0
+	count = 0
+	for item in currentItemList:
+		index1 = 0
+		index2 = 0
+		index3 = 0
+		#for j in range(len(currentItemList[i])):
+		if len(item) == 2:
+			index1 = item[0]
+			index2 = item[1]
+			for trans in table:
+				if trans[index1] == 1 and trans[index2] == 1:
+					currentCountList[count] += 1
+
+		if len(item) == 3:
+			index1 = item[0]
+			index2 = item[1]
+			index3 = item[2]
+			for trans in table:
+				if trans[index1] == 1 and trans[index2] == 1 and trans[index3] == 1:
+					currentCountList[count] += 1
+	
+		count += 1
+	return currentCountList
+
+noItems = 5#int(input("Enter number of items:"))
+noTrans = 5#int(input("Enter number of transactions:"))
+minSupport = int(input("Enter minimum support count(%):"))
+minConfidence = int(input("Enter minimum confidence(%):"))
+
+ms = (minSupport * noTrans)/100
+print("minimum support count = ",ms)
+
+itemList = []
+newItemList = []
+item = ''
+#item = 'I'+str(i)
+countList = [0] * noItems 
+currentItemList = []
+currentCountList = []
+tempItemList = []
+tempCountList = []
+
+table = [[0] * noItems for i in range(noTrans)]
+for i in range(noItems):
+	itemList.append(i)
+
+table = [[1,1,1,0,0],
+		 [1,1,0,0,0],
+		 [1,1,0,1,0],
+		 [1,0,0,0,1],
+		 [0,0,0,1,1]]	
+#for i in range(noTrans):
+#	print("Enter items for transactions T"+str(i+1)+":-")
+#	for j in range(noItems):
+#		ch = input("Enter (Y/N) for item "+'I'+str(j)+':') 
+#		if ch == 'Y' or ch == 'y':
+#			table[i][j] = 1
+#		else:
+#			table[i][j] = 0	
+count()
+print("\n\tIteration 1")
+print("ITEM\t\tCOUNT")
+for i in range(len(countList)):
+	print('I'+str(itemList[i])+'\t\t'+str(countList[i]))
+print("After removing elements with Support Count less than ",str(ms))
+currentItemList,currentCountList = filter(itemList,countList)
+printCountList(currentItemList,currentCountList)
+print()
+tempItemList,tempCountList = crossproduct(currentItemList)
+currentItemList,currentCountList = tempItemList,tempCountList
+currentCountList = newCount(currentItemList,currentCountList)
+print("\n\tIteration 2")
+printCountList(currentItemList,currentCountList)
+currentItemList,currentCountList = filter(currentItemList,currentCountList)
+print("After removing elements with Support Count less than ",str(ms))
+printCountList(currentItemList,currentCountList)
+print('\n\n\tAssociation Rules')
+rule(currentItemList,currentCountList)
+#currentItemList,currentCountList = crossproduct(currentItemList)
+#currentCountList = newCount(currentItemList,currentCountList)
+#print()
+
+		''')
+def aggloromative():
+	print('Agggloromative')
+	print('''
+# %matplotlib inline
+import matplotlib.pyplot as plt  
+import pandas as pd  
+import csv
+import numpy as np
+import math  
+import scipy.cluster.hierarchy as shc
+from sklearn.cluster import AgglomerativeClustering
+data = pd.read_csv('plot.csv')   
+data = data.iloc[:].values 
+print(" Input data is",data)
+def CalculateDistance(p1,q1,p2,q2):
+    sq1=(p2-p1)*(p2-p1)
+    sq2=(q2-q1)*(q2-q1)
+    return round((math.sqrt(sq1+sq2)),3)
+
+
+def GenerteMatrix(n,x,y):
+    global matrix
+    a = np.tile(np.nan, (n, n))
+    for i in range(n):
+        for j in range(n):
+            if(i==j):
+                a[i][j]=0.00
+            elif(j<i):
+                a[i][j]=CalculateDistance(x[i],y[i],x[j],y[j])
+            else:
+     
+               a[i][j]=0.00
+    return a
+x=[]	    
+y=[]
+a=[]
+with open('plot.csv', 'r') as benFile:
+    benReader = csv.reader(benFile)
+    for row2 in benReader:
+        a.append(row2)
+benFile.close()
+n=len(a)
+
+n=n-1
+print(n)
+k=0
+z=0
+for i in range(1,n+1):
+    for j in range(0,2):
+        if(j==0):
+            x.append(a[i][j])
+        else:
+            y.append(a[i][j])
+x = [float(i) for i in x]
+y = [float(i) for i in y]
+print("----------------------OUTPUT---------------------------")
+for i in range(n-1):
+    a=GenerteMatrix(n,x,y) 
+    n=n-1
+    print("--------------------Iteration",i,"----------------------")
+    print(a)
+
+plt.figure(figsize=(10, 7))  
+plt.title("Dendograms")  
+dend = shc.dendrogram(shc.linkage(data, method='ward'))  
+cluster = AgglomerativeClustering(n_clusters=2, affinity='euclidean', linkage='ward')  
+op=cluster.fit_predict(data)
+c1=[]
+c2=[]
+for i in range(len(op)):
+    if(op[i]==0):
+        c1.append("p"+str(i))
+    else:
+        c2.append("p"+str(i))
+for i in range(len(op)):
+    if(len(c1)>1):
+        v1=c1.pop()
+        v2=c1.pop()
+        print("cluster",i ," Merging between ---->",v1, "and", v2)
+        c1.append(v1+v2)
+    elif(len(c2)>1):
+        v1=c2.pop()
+        v2=c2.pop()
+        print("cluster",i ," Merging between ---->",v1, "and", v2)
+        c2.append(v1+v2)
+v1=c1.pop()
+v2=c2.pop()
+print("cluster",i ," Merging between ---->",v1, "and", v2)
+
+plt.show()
+
+		''')
